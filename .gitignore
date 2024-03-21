@@ -1,6 +1,6 @@
-/vkcs_provider.tf
-/.terraform.lock.hcl
-/.terraform/
-/.gitignore
-/terraform.tfstate
-/terraform.tfstate.backup
+terraform/vkcs_provider.tf
+.terraform.lock.hcl
+.terraform/
+
+terraform.tfstate
+terraform.tfstate.backup
