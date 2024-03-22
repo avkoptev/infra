@@ -63,11 +63,17 @@ resource "vkcs_lb_pool" "pool" {
 }
 
 resource "vkcs_lb_member" "member_1" {
-  address = "${vkcs_networking_floatingip.fip.address}"
-  protocol_port = 8080
   pool_id = "${vkcs_lb_pool.pool.id}"
-  subnet_id = "${vkcs_networking_subnet.subnetwork.id}"
-  weight = 0
+  
+  dynamic "member" {
+    for_each = vkcs_compute_instance.my-vm-1
+    content {
+      address = member.value.access_ip_v4
+      protocol_port = 8080
+      subnet_id = "${vkcs_networking_subnet.subnetwork.id}"
+      weight = 0
+    }
+  }
 }
 
 output "instance_fip" {

@@ -68,3 +68,10 @@ resource "vkcs_networking_port_secgroup_associate" "port" {
    vkcs_networking_secgroup.secgroup.id,
    ]
 }
+
+resource "vkcs_publicdns_zone" "zone" {
+   zone = "warspoon.ru"
+   primary_dns = "ns1.mcs.mail.ru"
+   admin_email = "izgoi_ketsal@mail.ru"
+   expire = 3600000
+}

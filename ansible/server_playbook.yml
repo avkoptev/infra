@@ -2,35 +2,61 @@
 - hosts: servers
   remote_user: ubuntu
 
-  tasks:
-    - name: install dependencies
-      apt:
-        name: "{{item}}"
-        state: present
-        update_cache: yes
-      loop:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - gnupg-agent
-        - software-properties-common
+  vars:   
+    repositiry: https://gitlab.skillbox.ru/aleksei_koptev/service.git
 
-    - name: add GPG key
-      apt_key:
+  tasks:
+#install Docker
+    - name: Add Docker GPG apt Key
+      ansible.builtin.apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: add docker repository to apt
-      apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    - name: Add repository into sources list
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
         state: present
+        filename: docker
 
-    - name: install docker
-      apt:
-        name: "{{item}}"
-        state: latest
-        update_cache: yes
-      loop:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
+    - name: Install Docker 23.0.1-1
+      ansible.builtin.apt:
+        name:
+          - docker-ce=5:23.0.1-1~ubuntu.22.04~jammy
+          - docker-ce-cli=5:23.0.1-1~ubuntu.22.04~jammy
+          - containerd.io
+        state: present
+        update_cache: true
+
+    - name: Setup docker user
+      ansible.builtin.user:
+        name: docker
+        groups: "docker"
+        append: true
+        sudo_user: yes
+
+    - name: Install Docker module for Python
+      ansible.builtin.pip:
+        name: docker
+
+    - name: Install Docker-Compose&Set Permission
+      ansible.builtin.get_url:
+        url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: '755'
+
+    - name: Create Docker-Compose symlink
+      ansible.builtin.command:
+        cmd: ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+        creates: /usr/bin/docker-compose
+
+    - name: Restart Docker
+      ansible.builtin.service:
+        name: docker
+        state: restarted
+        enabled: true
+
+#install skillbox-dockers        
+    - name: Clone the repository
+      git:
+        repo: "{{ repositiry }}"
+        dest: "{{ release_path }}"
