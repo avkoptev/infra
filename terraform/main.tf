@@ -25,6 +25,7 @@ resource "vkcs_compute_instance" "my-vm-1" {
 
   network {
     uuid = vkcs_networking_network.network.id
+    fixed_ip_v4 = "192.168.199.110"
   }
 
   depends_on = [
@@ -62,18 +63,12 @@ resource "vkcs_lb_pool" "pool" {
   listener_id = "${vkcs_lb_listener.listener.id}"
 }
 
-resource "vkcs_lb_member" "member_1" {
+resource "vkcs_lb_member" "member_1" {    
+  address = "192.168.199.110"
+  protocol_port = 8080
   pool_id = "${vkcs_lb_pool.pool.id}"
-  
-  dynamic "member" {
-    for_each = vkcs_compute_instance.my-vm-1
-    content {
-      address = member.value.access_ip_v4
-      protocol_port = 8080
-      subnet_id = "${vkcs_networking_subnet.subnetwork.id}"
-      weight = 0
-    }
-  }
+  subnet_id = "${vkcs_networking_subnet.lb.id}"
+  weight = 0
 }
 
 output "instance_fip" {
