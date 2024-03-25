@@ -42,35 +42,16 @@ resource "vkcs_networking_secgroup_rule" "secgroup_rule_1" {
 resource "vkcs_networking_secgroup_rule" "secgroup_rule_2" {
    direction = "ingress"
    ethertype = "IPv4"
-   port_range_max = 80
-   port_range_min = 80
+   port_range_max = 8080
+   port_range_min = 8080
    remote_ip_prefix = "0.0.0.0/0"
    protocol = "tcp"
    security_group_id = vkcs_networking_secgroup.secgroup.id
 }
 
-#resource "vkcs_networking_port" "port" {
-#   name = "port_1"
-#   admin_state_up = "true"
-#   network_id = vkcs_networking_network.network.id
-
-#   fixed_ip {
-#   subnet_id =  vkcs_networking_subnet.subnetwork.id
-#   ip_address = "192.168.199.23"
-#   }
-#}
-
-#resource "vkcs_networking_port_secgroup_associate" "port" {
-#   port_id = vkcs_networking_port.port.id
-#   enforce = "false"
-#   security_group_ids = [
-#   vkcs_networking_secgroup.secgroup.id,
-#   ]
-#}
-
 resource "vkcs_publicdns_zone" "zone" {
    zone = "warspoon.ru"
-   primary_dns = "ns1.mcs.mail.ru"
+   primary_dns = "ns1.mcs.mail.ru"   
    admin_email = "izgoi_ketsal@mail.ru"
    expire = 3600000
 }

@@ -26,14 +26,19 @@
           - docker-ce-cli=5:23.0.1-1~ubuntu.22.04~jammy
           - containerd.io
         state: present
-        update_cache: true
+        update_cache: true        
 
     - name: Setup docker user
       ansible.builtin.user:
         name: docker
         groups: "docker"
         append: true
-        sudo_user: yes
+#        sudo_user: yes
+
+    - name: install pip3
+      apt: 
+        name: python3-pip 
+        state: present 
 
     - name: Install Docker module for Python
       ansible.builtin.pip:

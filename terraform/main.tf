@@ -11,7 +11,7 @@ resource "vkcs_compute_instance" "my-vm-1" {
   name                    = "server-vm-1"
   flavor_id               = data.vkcs_compute_flavor.compute.id
   key_pair                = "warspoonserver-rsa"
-  security_groups         = ["default","secgroup"]
+  security_groups         = ["default","security_group"]
   availability_zone       = "MS1"
 
   block_device {
