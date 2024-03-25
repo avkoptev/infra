@@ -67,7 +67,7 @@ resource "vkcs_lb_member" "member_1" {
   address = "192.168.199.110"
   protocol_port = 8080
   pool_id = "${vkcs_lb_pool.pool.id}"
-  subnet_id = "${vkcs_networking_subnet.lb.id}"
+  subnet_id = "${vkcs_networking_subnet.subnetwork.id}"
   weight = 0
 }
 
