@@ -49,6 +49,15 @@ resource "vkcs_lb_loadbalancer" "my-lb-1" {
   vip_subnet_id = "${vkcs_networking_subnet.subnetwork.id}"  
 }
 
+resource "vkcs_networking_floatingip" "lb_fip" {
+  pool = data.vkcs_networking_network.extnet.name
+}
+
+resource "vkcs_networking_floatingip_associate" "lb_fip" {
+  floating_ip = vkcs_networking_floatingip.lb_fip.address
+  port_id = vkcs_lb_loadbalancer.my-lb-1.vip_port_id
+}
+
 resource "vkcs_lb_listener" "listener" {
   name = "listener"
   protocol = "HTTP"
@@ -73,4 +82,8 @@ resource "vkcs_lb_member" "member_1" {
 
 output "instance_fip" {
   value = vkcs_networking_floatingip.fip.address
+}
+
+output "instance_lb_fip" {
+  value = vkcs_networking_floatingip.lb_fip.address
 }

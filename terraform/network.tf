@@ -47,6 +47,18 @@ resource "vkcs_networking_secgroup_rule" "secgroup_rule_2" {
    remote_ip_prefix = "0.0.0.0/0"
    protocol = "tcp"
    security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_2"
+}
+
+resource "vkcs_networking_secgroup_rule" "secgroup_rule_3" {
+   direction = "ingress"
+   ethertype = "IPv4"
+   port_range_max = 443
+   port_range_min = 443
+   remote_ip_prefix = "0.0.0.0/0"
+   protocol = "tcp"
+   security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_3"
 }
 
 resource "vkcs_publicdns_zone" "zone" {
@@ -54,4 +66,12 @@ resource "vkcs_publicdns_zone" "zone" {
    primary_dns = "ns1.mcs.mail.ru"   
    admin_email = "izgoi_ketsal@mail.ru"
    expire = 3600000
+}
+
+resource "vkcs_publicdns_record" "srv" {
+  zone_id = vkcs_publicdns_zone.zone.id
+  type = "A"
+  name = "@"
+  ip = vkcs_networking_floatingip.lb_fip.address
+  ttl = 60  
 }
