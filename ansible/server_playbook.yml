@@ -2,10 +2,6 @@
 - hosts: servers
   remote_user: ubuntu
 
-  vars:
-    release_path: /home/ubuntu/
-    repositiry: https://gitlab.skillbox.ru/aleksei_koptev/service.git
-
   tasks:
 #install Docker
     - name: Add Docker GPG apt Key
