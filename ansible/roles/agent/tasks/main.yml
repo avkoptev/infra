@@ -23,5 +23,16 @@
     regexp: "185.185.185.185"
     replace: "{{ansible_ssh_host}}"
 
+- name: replace ssh port
+  ansible.builtin.replace:
+    path: /etc/ssh/sshd_config
+    regexp: "#Port 22"
+    replace: "Port 2222"
+
+- name: restart ssh service
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+
 - name: start docker-compose
   shell: docker-compose up -d

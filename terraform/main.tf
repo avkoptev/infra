@@ -80,10 +80,51 @@ resource "vkcs_lb_member" "member_1" {
   weight = 0
 }
 
+#Create runner
+resource "vkcs_compute_instance" "my-vm-2" {
+  name                    = "runner-vm-1"
+  flavor_id               = data.vkcs_compute_flavor.compute.id
+  key_pair                = "warspoonserver-rsa"
+  security_groups         = ["default","security_group"]
+  availability_zone       = "MS1"
+
+  block_device {
+    uuid                  = data.vkcs_images_image.my-ubuntu.id
+    source_type           = "image"
+    destination_type      = "volume"
+    volume_size           = 10
+    boot_index            = 0
+    delete_on_termination = true
+  }
+
+  network {
+    uuid = vkcs_networking_network.network.id    
+  }
+
+  depends_on = [
+    vkcs_networking_network.network,
+    vkcs_networking_subnet.subnetwork
+  ]
+}
+
+resource "vkcs_networking_floatingip" "run_fip" {
+  pool = data.vkcs_networking_network.extnet.name
+}
+
+resource "vkcs_compute_floatingip_associate" "run_fip" {
+  floating_ip = vkcs_networking_floatingip.run_fip.address
+  instance_id = vkcs_compute_instance.my-vm-2.id
+}
+
+#Output
 output "instance_fip" {
-  value = vkcs_networking_floatingip.fip.address
+  value = vkcs_networking_floatingip.fip.address  
 }
 
 output "instance_lb_fip" {
   value = vkcs_networking_floatingip.lb_fip.address
+}
+
+output "instance_run_fip" {
+  value = vkcs_networking_floatingip.run_fip.address
 }
