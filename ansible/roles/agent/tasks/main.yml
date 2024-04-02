@@ -1,0 +1,46 @@
+---
+# tasks file for agent
+- name: creates directorys
+  ansible.builtin.file:
+    path: "{{item}}"     
+    state: directory
+  loop:
+    - /opt/gitlab
+    - /opt/gitlab/config
+    - /opt/gitlab/logs
+    - /opt/gitlab/data
+    - /opt/gitlab-runner
+    - /opt/gitlab-runner/
+
+- name: copy docker-compose.yml
+  copy:
+    src: ./roles/agent/files/docker-compose.yml
+    dest: /home/ubuntu/
+
+- name: replace ip runner
+  ansible.builtin.replace:
+    path: /home/ubuntu/docker-compose.yml
+    regexp: "185.185.185.185"
+    replace: "{{ansible_ssh_host}}"
+
+- name: replace ssh port
+  ansible.builtin.replace:
+    path: /etc/ssh/sshd_config
+    regexp: "#Port 22"
+    replace: "Port 2222"
+
+- name: restart ssh service
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+
+- name: start docker-compose
+  shell: docker-compose up -d
+
+- name: copy gitlab.rb
+  copy:
+    src: ./roles/agent/files/gitlab.rb
+    dest: /opt/gitlab/config
+
+- name: gitlab reconfig
+  shell: gitlab-ctl reconfigure
