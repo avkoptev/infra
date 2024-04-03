@@ -2,6 +2,10 @@ data "vkcs_compute_flavor" "compute" {
   name = "STD2-1-2"
 }
 
+data "vkcs_compute_flavor" "gitlab" {
+  name = "STD2-1-4"
+}
+
 data "vkcs_images_image" "my-ubuntu" {
   name = "Ubuntu-22.04-202208"
 }
@@ -83,7 +87,7 @@ resource "vkcs_lb_member" "member_1" {
 #Create runner
 resource "vkcs_compute_instance" "my-vm-2" {
   name                    = "runner-vm-1"
-  flavor_id               = data.vkcs_compute_flavor.compute.id
+  flavor_id               = data.vkcs_compute_flavor.gitlab.id
   key_pair                = "warspoonserver-rsa"
   security_groups         = ["default","security_group"]
   availability_zone       = "MS1"
@@ -92,7 +96,7 @@ resource "vkcs_compute_instance" "my-vm-2" {
     uuid                  = data.vkcs_images_image.my-ubuntu.id
     source_type           = "image"
     destination_type      = "volume"
-    volume_size           = 10
+    volume_size           = 20
     boot_index            = 0
     delete_on_termination = true
   }

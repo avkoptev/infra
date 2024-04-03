@@ -37,10 +37,10 @@
 - name: start docker-compose
   shell: docker-compose up -d
 
-- name: copy gitlab.rb
-  copy:
-    src: ./roles/agent/files/gitlab.rb
-    dest: /opt/gitlab/config
+#- name: copy gitlab.rb
+#  copy:
+#    src: ./roles/agent/files/gitlab.rb
+#    dest: /opt/gitlab/config
 
-- name: gitlab reconfig
-  shell: gitlab-ctl reconfigure
+#- name: gitlab reconfig
+#  shell: docker restart gitlab
