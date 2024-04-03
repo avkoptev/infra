@@ -37,6 +37,11 @@
 - name: start docker-compose
   shell: docker-compose up -d
 
+#install ansible
+- name: install ansible
+  shell: pip3 install ansible
+  
+
 #- name: copy gitlab.rb
 #  copy:
 #    src: ./roles/agent/files/gitlab.rb
