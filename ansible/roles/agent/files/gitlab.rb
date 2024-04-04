@@ -29,7 +29,7 @@
 ##! On AWS EC2 instances, we also attempt to fetch the public hostname/IP
 ##! address from AWS. For more details, see:
 ##! https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-retrieval.html
-external_url 'https://ci.warspoon.ru'
+# external_url 'GENERATED_EXTERNAL_URL'
 
 ## Roles for multi-instance GitLab
 ##! The default is to have no roles enabled, which results in GitLab running as an all-in-one instance.
@@ -940,10 +940,10 @@ external_url 'https://ci.warspoon.ru'
 ##! Docs: https://docs.gitlab.com/ee/administration/packages/container_registry.html
 ################################################################################
 
-# registry_external_url 'https://registry.example.com'
+registry_external_url 'http://ci.warspoon.ru:5005'
 
 ### Settings used by GitLab application
-# gitlab_rails['registry_enabled'] = true
+gitlab_rails['registry_enabled'] = true
 # gitlab_rails['registry_host'] = "registry.gitlab.example.com"
 # gitlab_rails['registry_port'] = "5005"
 # gitlab_rails['registry_path'] = "/var/opt/gitlab/gitlab-rails/shared/registry"
@@ -966,7 +966,7 @@ external_url 'https://ci.warspoon.ru'
 # registry['uid'] = nil
 # registry['gid'] = nil
 # registry['dir'] = "/var/opt/gitlab/registry"
-# registry['registry_http_addr'] = "127.0.0.1:5000"
+registry['registry_http_addr'] = "127.0.0.1:5000"
 # registry['debug_addr'] = "localhost:5001"
 # registry['log_directory'] = "/var/log/gitlab/registry"
 # registry['env_directory'] = "/opt/gitlab/etc/registry/env"
@@ -1673,9 +1673,9 @@ external_url 'https://ci.warspoon.ru'
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html
 ################################################################################
 
-nginx['enable'] = true
+# nginx['enable'] = true
 # nginx['client_max_body_size'] = '250m'
-nginx['redirect_http_to_https'] = true
+# nginx['redirect_http_to_https'] = false
 # nginx['redirect_http_to_https_port'] = 80
 
 ##! Most root CA's are included by default
@@ -1722,11 +1722,11 @@ nginx['redirect_http_to_https'] = true
 
 ##! **Override only if you use a reverse proxy**
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#setting-the-nginx-listen-port
-#nginx['listen_port'] = 8929 
+nginx['listen_port'] = 80 
 
 ##! **Override only if your reverse proxy internally communicates over HTTP**
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#supporting-proxied-ssl
-#nginx['listen_https'] = false
+nginx['listen_https'] = false
 
 ##! **Override only if you use a reverse proxy with proxy protocol enabled**
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html#configuring-proxy-protocol
@@ -1736,7 +1736,7 @@ nginx['redirect_http_to_https'] = true
 # nginx['custom_nginx_config'] = "include /etc/nginx/conf.d/example.conf;"
 # nginx['proxy_read_timeout'] = 3600
 # nginx['proxy_connect_timeout'] = 300
-#nginx['proxy_set_headers'] = {
+# nginx['proxy_set_headers'] = {
 #  "Host" => "$http_host_with_default",
 #  "X-Real-IP" => "$remote_addr",
 #  "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
@@ -2796,9 +2796,9 @@ nginx['redirect_http_to_https'] = true
 # letsencrypt['wwwroot'] = '/var/opt/gitlab/nginx/www'
 # See http://docs.gitlab.com/omnibus/settings/ssl.html#automatic-renewal for more on these sesttings
 # letsencrypt['auto_renew'] = true
-letsencrypt['auto_renew_hour'] = 0
-letsencrypt['auto_renew_minute'] = nil # Should be a number or cron expression, if specified.
-letsencrypt['auto_renew_day_of_month'] = "*/4"
+# letsencrypt['auto_renew_hour'] = 0
+# letsencrypt['auto_renew_minute'] = nil # Should be a number or cron expression, if specified.
+# letsencrypt['auto_renew_day_of_month'] = "*/4"
 # letsencrypt['auto_renew_log_directory'] = '/var/log/gitlab/lets-encrypt'
 # letsencrypt['alt_names'] = []
 
