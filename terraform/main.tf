@@ -3,7 +3,7 @@ data "vkcs_compute_flavor" "compute" {
 }
 
 data "vkcs_compute_flavor" "gitlab" {
-  name = "STD2-1-4"
+  name = "STD2-2-8"
 }
 
 data "vkcs_images_image" "my-ubuntu" {
