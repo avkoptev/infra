@@ -83,6 +83,17 @@ resource "vkcs_networking_secgroup_rule" "secgroup_rule_5" {
    description = "secgroup_rule_5"
 }
 
+resource "vkcs_networking_secgroup_rule" "secgroup_rule_6" {
+   direction = "ingress"
+   ethertype = "IPv4"
+   port_range_max = 5005
+   port_range_min = 5005
+   protocol = "tcp"
+  remote_ip_prefix = "0.0.0.0/0"
+   security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_5"
+}
+
 resource "vkcs_publicdns_zone" "zone" {
    zone = "warspoon.ru"
    primary_dns = "ns1.mcs.mail.ru"   

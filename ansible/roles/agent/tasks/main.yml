@@ -43,9 +43,9 @@
   
 
 #- name: copy gitlab.rb
-#  copy:
-#    src: ./roles/agent/files/gitlab.rb
-#    dest: /opt/gitlab/config
+  copy:
+    src: ./roles/agent/files/gitlab.rb
+    dest: /opt/gitlab/config
 
-#- name: gitlab reconfig
-#  shell: docker restart gitlab
+- name: gitlab reconfig
+  shell: docker exex -it  gitlab gitlab-ctl reconfigure

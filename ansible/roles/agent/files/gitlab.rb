@@ -940,7 +940,7 @@
 ##! Docs: https://docs.gitlab.com/ee/administration/packages/container_registry.html
 ################################################################################
 
-registry_external_url 'http://ci.warspoon.ru:5005'
+registry_external_url 'https://ci.warspoon.ru:5005'
 
 ### Settings used by GitLab application
 gitlab_rails['registry_enabled'] = true
@@ -966,7 +966,7 @@ gitlab_rails['registry_enabled'] = true
 # registry['uid'] = nil
 # registry['gid'] = nil
 # registry['dir'] = "/var/opt/gitlab/registry"
-registry['registry_http_addr'] = "127.0.0.1:5000"
+# registry['registry_http_addr'] = "127.0.0.1:5000"
 # registry['debug_addr'] = "localhost:5001"
 # registry['log_directory'] = "/var/log/gitlab/registry"
 # registry['env_directory'] = "/opt/gitlab/etc/registry/env"
@@ -2788,17 +2788,17 @@ nginx['listen_https'] = false
 ################################################################################
 # Let's Encrypt integration
 ################################################################################
-# letsencrypt['enable'] = nil
-# letsencrypt['contact_emails'] = [] # This should be an array of email addresses to add as contacts
+letsencrypt['enable'] = true
+letsencrypt['contact_emails'] = ['admin@admin.com'] # This should be an array of email addresses to add as contacts
 # letsencrypt['group'] = 'root'
 # letsencrypt['key_size'] = 2048
 # letsencrypt['owner'] = 'root'
 # letsencrypt['wwwroot'] = '/var/opt/gitlab/nginx/www'
 # See http://docs.gitlab.com/omnibus/settings/ssl.html#automatic-renewal for more on these sesttings
-# letsencrypt['auto_renew'] = true
-# letsencrypt['auto_renew_hour'] = 0
+letsencrypt['auto_renew'] = true
+letsencrypt['auto_renew_hour'] = 3
 # letsencrypt['auto_renew_minute'] = nil # Should be a number or cron expression, if specified.
-# letsencrypt['auto_renew_day_of_month'] = "*/4"
+letsencrypt['auto_renew_day_of_month'] = "*/7"
 # letsencrypt['auto_renew_log_directory'] = '/var/log/gitlab/lets-encrypt'
 # letsencrypt['alt_names'] = []
 
