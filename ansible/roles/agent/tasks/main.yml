@@ -38,14 +38,15 @@
   shell: docker-compose up -d
 
 #install ansible
-- name: install ansible
-  shell: pip3 install ansible
+#- name: install ansible
+#  shell: pip3 install ansible
   
 
-#- name: copy gitlab.rb
+- name: copy gitlab.rb
   copy:
     src: ./roles/agent/files/gitlab.rb
     dest: /opt/gitlab/config
 
 - name: gitlab reconfig
-  shell: docker exex -it  gitlab gitlab-ctl reconfigure
+  shell: docker exec -it  gitlab gitlab-ctl reconfigure
+  ignore_errors: true
