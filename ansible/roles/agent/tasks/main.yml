@@ -35,12 +35,10 @@
     state: restarted
 
 - name: start docker-compose
-  shell: docker-compose up -d
-
-#install ansible
-#- name: install ansible
-#  shell: pip3 install ansible
-  
+  ansible.builtin.shell: docker-compose up -d
+ 
+- name: hostname
+  ansible.builtin.shell: hostnamectl set-hostname ci.warspoon.ru --static
 
 - name: copy gitlab.rb
   copy:
@@ -48,5 +46,5 @@
     dest: /opt/gitlab/config
 
 - name: gitlab reconfig
-  shell: docker exec -it  gitlab gitlab-ctl reconfigure
+  ansible.builtin.shell: docker exec -it  gitlab gitlab-ctl reconfigure
   ignore_errors: true
