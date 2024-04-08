@@ -116,3 +116,11 @@ resource "vkcs_publicdns_record" "run" {
   ip = vkcs_networking_floatingip.run_fip.address
   ttl = 60  
 }
+
+resource "vkcs_publicdns_record" "reg" {
+  zone_id = vkcs_publicdns_zone.zone.id
+  type = "A"
+  name = "registry.ci"
+  ip = vkcs_networking_floatingip.run_fip.address
+  ttl = 60  
+}

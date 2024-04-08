@@ -940,7 +940,7 @@ external_url 'https://ci.warspoon.ru'
 ##! Docs: https://docs.gitlab.com/ee/administration/packages/container_registry.html
 ################################################################################
 
-registry_external_url 'https://ci.warspoon.ru:5005'
+registry_external_url 'https://registry.ci.warspoon.ru:5005'
 
 ### Settings used by GitLab application
 gitlab_rails['registry_enabled'] = true
