@@ -46,5 +46,6 @@
     dest: /opt/gitlab/config
 
 - name: gitlab reconfig
-  ansible.builtin.shell: docker exec -it  gitlab gitlab-ctl reconfigure
+  #ansible.builtin.shell: docker exec -it  gitlab gitlab-ctl reconfigure
+  ansible.builtin.shell: docker restart gitlab
   ignore_errors: true

@@ -960,7 +960,7 @@ gitlab_rails['registry_enabled'] = true
 # gitlab_rails['registry_issuer'] = "omnibus-gitlab-issuer"
 
 ### Settings used by Registry application
-# registry['enable'] = true
+registry['enable'] = true
 # registry['username'] = "registry"
 # registry['group'] = "registry"
 # registry['uid'] = nil
@@ -2277,15 +2277,15 @@ gitlab_rails['registry_enabled'] = true
 # `registry_nginx['some_setting']` and should be set separately.
 
 # Below you can find settings that are exclusive to "Registry NGINX"
-# registry_nginx['enable'] = false
+registry_nginx['enable'] = true
 
-# registry_nginx['proxy_set_headers'] = {
-#  "Host" => "$http_host",
-#  "X-Real-IP" => "$remote_addr",
-#  "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
-#  "X-Forwarded-Proto" => "https",
-#  "X-Forwarded-Ssl" => "on"
-# }
+registry_nginx['proxy_set_headers'] = {
+  "Host" => "$http_host",
+  "X-Real-IP" => "$remote_addr",
+  "X-Forwarded-For" => "$proxy_add_x_forwarded_for",
+  "X-Forwarded-Proto" => "https",
+  "X-Forwarded-Ssl" => "on"
+}
 
 # When the registry is automatically enabled using the same domain as `external_url`,
 # it listens on this port
