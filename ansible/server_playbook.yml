@@ -5,6 +5,7 @@
   roles:
     - role: docker
     - role: nginx
+    - role: target
       
 
 - hosts: runners
@@ -13,3 +14,11 @@
   roles:
     - role: docker
     - role: agent
+    - role: target
+
+- hosts: monitoring
+  remote_user: ubuntu
+
+  roles:
+    - role: observe
+    - role: target

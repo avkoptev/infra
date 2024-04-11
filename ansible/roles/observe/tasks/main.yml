@@ -1,0 +1,87 @@
+---
+# tasks file for observe
+- name: Create Folder /opt/prometheus
+  file:
+    path: /opt/prometheus
+    mode: 0755
+    state: directory
+
+- name: Create Folder /opt/grafana
+  file:
+    path: /opt/grafana
+    mode: 0755
+    state: directory
+
+- name: Create Folder /opt/alertmanager
+  file:
+    path: /opt/alertmanager
+    mode: 0755
+    state: directory
+
+- name: Create prometheus configuration file
+  copy:
+    dest: /opt/prometheus/prometheus.yml
+    src: prometheus_main.yml
+    mode: 0644
+
+- name: Create prometheus alert configuration file
+  copy:
+    dest: /opt/prometheus/prometheus_alerts_rules.yml
+    src: prometheus_alerts_rules.yml
+    mode: 0644
+
+- name: Create grafana configuration files
+  copy:
+    dest: /opt/
+    src: grafana
+    mode: 0644
+
+- name: Create alertmanager configuration file
+  template:
+    dest: /opt/alertmanager/alertmanager.yml
+    src: alertmanager/alertmanager.j2
+    mode: 0644
+
+- name: Create Prometheus container
+  docker_container:
+    name: prometheus
+    restart_policy: always
+    image: prom/prometheus:latest
+    volumes:
+      - /opt/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /opt/prometheus/prometheus_alerts_rules.yml:/etc/prometheus/prometheus_alerts_rules.yml
+      - prometheus_main_data:/prometheus
+    command: >
+      --config.file=/etc/prometheus/prometheus.yml
+      --storage.tsdb.path=/prometheus
+      --web.console.libraries=/etc/prometheus/console_libraries
+      --web.console.templates=/etc/prometheus/consoles
+      --web.enable-lifecycle
+    published_ports: "9090:9090"
+
+- name: Create Grafana container
+  docker_container:
+    name: grafana
+    restart_policy: always
+    image: grafana/grafana:latest
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - /opt/grafana/provisioning:/etc/grafana/provisioning
+      - /opt/grafana/dashboards:/var/lib/grafana/dashboards
+    env:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    published_ports: "3000:3000"
+
+- name: Create Alertmanager container
+  docker_container:
+    name: alertmanager
+    restart_policy: always
+    image: prom/alertmanager:latest
+    volumes:
+      - alertmanager-data:/data
+      - /opt/alertmanager:/config
+    command: >
+      --config.file=/config/alertmanager.yml 
+      --log.level=debug
+    published_ports: "9093:9093"

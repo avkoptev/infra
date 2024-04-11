@@ -91,7 +91,51 @@ resource "vkcs_networking_secgroup_rule" "secgroup_rule_6" {
    protocol = "tcp"
   remote_ip_prefix = "0.0.0.0/0"
    security_group_id = vkcs_networking_secgroup.secgroup.id
-   description = "secgroup_rule_5"
+   description = "secgroup_rule_6"
+}
+
+resource "vkcs_networking_secgroup_rule" "secgroup_rule_7" {
+   direction = "ingress"
+   ethertype = "IPv4"
+   port_range_max = 9090
+   port_range_min = 9090
+   protocol = "tcp"
+  remote_ip_prefix = "0.0.0.0/0"
+   security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_7"
+}
+
+resource "vkcs_networking_secgroup_rule" "secgroup_rule_8" {
+   direction = "ingress"
+   ethertype = "IPv4"
+   port_range_max = 9100
+   port_range_min = 9100
+   protocol = "tcp"
+  remote_ip_prefix = "0.0.0.0/0"
+   security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_8"
+}
+
+resource "vkcs_networking_secgroup_rule" "secgroup_rule_9" {
+   direction = "ingress"
+   ethertype = "IPv4"
+   port_range_max = 3000
+   port_range_min = 3000
+   protocol = "tcp"
+  remote_ip_prefix = "0.0.0.0/0"
+   security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_9"
+}
+
+resource "vkcs_networking_secgroup_rule" "secgroup_rule_10" {
+   direction = "ingress"
+   ethertype = "IPv4"
+   port_range_max = 9093
+   port_range_min = 9093
+   protocol = "tcp"
+  remote_ip_prefix = "0.0.0.0/0"
+   security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_10"
 }
 
 resource "vkcs_publicdns_zone" "zone" {
@@ -122,5 +166,21 @@ resource "vkcs_publicdns_record" "reg" {
   type = "A"
   name = "registry.ci"
   ip = vkcs_networking_floatingip.run_fip.address
+  ttl = 60  
+}
+
+resource "vkcs_publicdns_record" "Prometheus" {
+  zone_id = vkcs_publicdns_zone.zone.id
+  type = "A"
+  name = "monitoring"
+  ip = vkcs_networking_floatingip.mon_fip.address
+  ttl = 60  
+}
+
+resource "vkcs_publicdns_record" "Grafana" {
+  zone_id = vkcs_publicdns_zone.zone.id
+  type = "A"
+  name = "Grafana"
+  ip = vkcs_networking_floatingip.mon_fip.address
   ttl = 60  
 }
