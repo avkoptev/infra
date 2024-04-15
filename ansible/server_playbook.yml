@@ -20,5 +20,6 @@
   remote_user: ubuntu
 
   roles:
+    - role: docker  
     - role: observe
     - role: target

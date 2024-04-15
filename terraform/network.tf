@@ -184,3 +184,11 @@ resource "vkcs_publicdns_record" "Grafana" {
   ip = vkcs_networking_floatingip.mon_fip.address
   ttl = 60  
 }
+
+resource "vkcs_publicdns_record" "Server1" {
+  zone_id = vkcs_publicdns_zone.zone.id
+  type = "A"
+  name = "server1"
+  ip = vkcs_networking_floatingip.fip.address
+  ttl = 60  
+}
