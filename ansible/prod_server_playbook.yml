@@ -1,0 +1,6 @@
+- hosts: prod_servers
+  remote_user: ubuntu
+
+  roles:
+    - role: docker    
+    - role: target

@@ -4,9 +4,15 @@
 
   roles:
     - role: docker
-    - role: nginx
+#    - role: nginx
     - role: target
       
+- hosts: prod_servers
+  remote_user: ubuntu
+
+  roles:
+    - role: docker
+    - role: target
 
 - hosts: runners
   become: yes
