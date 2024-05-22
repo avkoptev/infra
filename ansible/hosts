@@ -1,11 +1,11 @@
 [servers]
-server_1 ansible_host=212.233.72.56 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+server_1 ansible_host=89.208.223.144 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 
 [prod_servers]
-prod_server_1 ansible_host=89.208.229.112 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+prod_server_1 ansible_host=212.233.121.204 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 
 [runners]
-runner_1 ansible_host=212.233.73.222 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+runner_1 ansible_host=185.86.145.160 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 
 [monitoring]
-monitor_1 ansible_host=89.208.231.87 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
+monitor_1 ansible_host=185.86.145.180 ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
