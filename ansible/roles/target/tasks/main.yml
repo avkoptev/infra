@@ -15,3 +15,28 @@
       --path.sysfs=/host/sys
       --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
     published_ports: "9100:9100"
+
+# agent for loki
+- name: Create Folder /opt/loki
+  file:
+    path: /opt/loki
+    mode: 0755
+    state: directory
+
+
+- name: Create promtail configuration file
+  copy:
+    dest: /opt/loki/promtail-config.yaml
+    src: promtail-config.yaml
+    mode: 0644
+
+- name: Run docker promtail
+  docker_container:
+    name: promtail
+    restart_policy: always
+    image: grafana/promtail:3.0.0
+    volumes:
+      - /opt/loki:/mnt/config
+      - /var/log:/var/log
+    command: >
+      --config.file=/mnt/config/promtail-config.yaml

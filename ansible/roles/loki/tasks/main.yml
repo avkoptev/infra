@@ -1,0 +1,23 @@
+---
+# tasks file for loki
+- name: Create Folder /opt/loki
+  file:
+    path: /opt/loki
+    mode: 0755
+    state: directory
+
+- name: Download docker loki
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/grafana/loki/v3.0.0/cmd/loki/loki-local-config.yaml
+    dest: /opt/loki/loki-config.yaml
+
+- name: Run docker loki
+  docker_container:
+    name: loki
+    restart_policy: always
+    image: grafana/loki:3.0.0
+    volumes:
+      - /opt/loki:/mnt/config      
+    command: >
+      --config.file=/mnt/config/loki-config.yaml
+    published_ports: "3100:3100"

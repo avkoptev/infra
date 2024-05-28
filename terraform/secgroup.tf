@@ -112,3 +112,25 @@ resource "vkcs_networking_secgroup_rule" "secgroup_rule_10" {
    security_group_id = vkcs_networking_secgroup.secgroup.id
    description = "secgroup_rule_10"
 }
+
+resource "vkcs_networking_secgroup_rule" "secgroup_rule_11" {
+   direction = "ingress"
+   ethertype = "IPv4"
+   port_range_max = 3100
+   port_range_min = 3100
+   protocol = "tcp"
+  remote_ip_prefix = "0.0.0.0/0"
+   security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_11"
+}
+
+resource "vkcs_networking_secgroup_rule" "secgroup_rule_12" {
+   direction = "ingress"
+   ethertype = "IPv4"
+   port_range_max = 9080
+   port_range_min = 9080
+   protocol = "tcp"
+  remote_ip_prefix = "0.0.0.0/0"
+   security_group_id = vkcs_networking_secgroup.secgroup.id
+   description = "secgroup_rule_12"
+}

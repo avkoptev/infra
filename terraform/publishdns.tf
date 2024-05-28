@@ -39,7 +39,7 @@ resource "vkcs_publicdns_record" "Prod_server1" {
   zone_id = vkcs_publicdns_zone.zone.id
   type = "A"
   name = "prodserver1"
-  ip = "${module.create_stage.instance_fip}"
+  ip = "${module.create_prod.instance_fip}"
   ttl = 60  
 }
 
@@ -76,7 +76,15 @@ resource "vkcs_publicdns_record" "Prometheus" {
 resource "vkcs_publicdns_record" "Grafana" {
   zone_id = vkcs_publicdns_zone.zone.id
   type = "A"
-  name = "Grafana"
+  name = "grafana"
+  ip = "${module.create_observe.instance_fip}"
+  ttl = 60  
+}
+
+resource "vkcs_publicdns_record" "Loki" {
+  zone_id = vkcs_publicdns_zone.zone.id
+  type = "A"
+  name = "loki"
   ip = "${module.create_observe.instance_fip}"
   ttl = 60  
 }
