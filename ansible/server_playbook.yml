@@ -4,7 +4,6 @@
 
   roles:
     - role: docker
-#    - role: nginx
     - role: target
       
 - hosts: prod_servers
