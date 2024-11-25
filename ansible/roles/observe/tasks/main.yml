@@ -36,12 +36,6 @@
     src: grafana
     mode: 0644
 
-#- name: Create alertmanager configuration file
-#  template:
-#    dest: /opt/alertmanager/alertmanager.yml
-#    src: alertmanager/alertmanager.j2
-#    mode: 0644
-
 - name: Create Prometheus container
   docker_container:
     name: prometheus
@@ -66,8 +60,6 @@
     image: grafana/grafana:latest
     volumes:
       - grafana-data:/var/lib/grafana
-#      - /opt/grafana/provisioning:/etc/grafana/provisioning
-#      - /opt/grafana/dashboards:/var/lib/grafana/dashboards
     env:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
