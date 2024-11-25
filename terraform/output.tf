@@ -6,10 +6,10 @@ output "prod_server1"{
   value=module.create_prod.instance_fip
 }
 
-output "gitlab"{
+output "runners"{
   value=module.create_gitlab.instance_fip
 }
 
-output "observe"{
+output "monitoring"{
   value=module.create_observe.instance_fip
 }
